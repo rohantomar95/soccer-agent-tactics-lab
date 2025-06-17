@@ -295,7 +295,7 @@ const DappCreateAgentModal: React.FC<{
       )}
 
       <div
-        className="bg-gray-900 rounded-lg w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto"
+        className="bg-gray-900 rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
       >
