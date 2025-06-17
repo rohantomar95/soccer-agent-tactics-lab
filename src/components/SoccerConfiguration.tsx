@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Users, Settings, Target, Zap, DollarSign, Star, Info } from 'lucide-react';
 
@@ -61,6 +60,24 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       name: '4-1-4-1 (Compact)', 
       description: 'Compact formation with defensive midfielder. Excellent for pressing and transitions.',
       resourceBonus: { attack: 0, midfield: 10, defense: 10 }
+    },
+    { 
+      value: '3-4-3', 
+      name: '3-4-3 (Wide Attack)', 
+      description: 'Aggressive formation with wide attacking players. Overwhelming in attack, exposed in defense.',
+      resourceBonus: { attack: 20, midfield: 5, defense: -15 }
+    },
+    { 
+      value: '4-5-1', 
+      name: '4-5-1 (Defensive)', 
+      description: 'Ultra-defensive setup with packed midfield. Excellent for soaking pressure and countering.',
+      resourceBonus: { attack: -15, midfield: 20, defense: 20 }
+    },
+    { 
+      value: '5-4-1', 
+      name: '5-4-1 (Ultra-Defensive)', 
+      description: 'Maximum defensive stability. Nearly impossible to break down but limited attacking options.',
+      resourceBonus: { attack: -20, midfield: 10, defense: 30 }
     }
   ];
 
@@ -88,6 +105,24 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       name: 'Defensive', 
       description: 'Solid defensive block, hard to break down. Focus on clean sheets and set pieces.',
       resourceBonus: { attack: -15, midfield: 0, defense: 25 }
+    },
+    { 
+      value: 'pressing', 
+      name: 'High Pressing', 
+      description: 'Intense pressure all over the pitch. Wins ball high up but exhausting for players.',
+      resourceBonus: { attack: 15, midfield: 15, defense: -10 }
+    },
+    { 
+      value: 'direct', 
+      name: 'Direct Play', 
+      description: 'Long balls and aerial duels. Bypasses midfield to create quick chances.',
+      resourceBonus: { attack: 15, midfield: -10, defense: 10 }
+    },
+    { 
+      value: 'technical', 
+      name: 'Technical', 
+      description: 'Short passing and technical skill focus. Beautiful football but can be predictable.',
+      resourceBonus: { attack: 10, midfield: 20, defense: -5 }
     }
   ];
 
@@ -120,16 +155,34 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       resourceBonus: { attack: -10, midfield: 0, defense: 20 }
     },
     { 
+      value: 'cautious', 
+      name: 'Cautious', 
+      description: 'Careful approach with emphasis on security. Waits for clear opportunities.',
+      resourceBonus: { attack: -5, midfield: 5, defense: 10 }
+    },
+    { 
       value: 'balanced', 
       name: 'Balanced', 
       description: 'Equal focus on attack and defense. Adaptable to game flow.',
       resourceBonus: { attack: 5, midfield: 5, defense: 5 }
     },
     { 
+      value: 'positive', 
+      name: 'Positive', 
+      description: 'Confident attacking approach. Looks to create chances regularly.',
+      resourceBonus: { attack: 10, midfield: 0, defense: -5 }
+    },
+    { 
       value: 'attacking', 
       name: 'Attacking', 
       description: 'Focus on scoring goals. Higher defensive line, more players forward.',
       resourceBonus: { attack: 20, midfield: 0, defense: -10 }
+    },
+    { 
+      value: 'overload', 
+      name: 'Overload Attack', 
+      description: 'All-out assault on goal. Maximum attacking commitment, defensive risks.',
+      resourceBonus: { attack: 30, midfield: 0, defense: -20 }
     }
   ];
 
@@ -189,6 +242,20 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       description: 'Clever striker who drops deep to create space and confusion.',
       effects: { creativity: 30, movement: 35, finishing: -10 },
       resourceCost: { attack: 10, midfield: 20, defense: 0 }
+    },
+    { 
+      id: 'set_piece_specialist', 
+      name: 'Set Piece Specialist', 
+      description: 'Master of dead ball situations. Deadly from free kicks and corners.',
+      effects: { free_kicks: 60, corners: 45, open_play: -15 },
+      resourceCost: { attack: 20, midfield: 10, defense: 0 }
+    },
+    { 
+      id: 'dead_ball_specialist', 
+      name: 'Penalty Expert', 
+      description: 'Ice-cold from the penalty spot and dangerous from all set pieces.',
+      effects: { penalties: 70, free_kicks: 50, pressure_handling: 40 },
+      resourceCost: { attack: 15, midfield: 5, defense: 0 }
     }
   ];
 
@@ -284,268 +351,16 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
   };
 
   return (
-    <div className="w-full space-y-[2.667rem] md:space-y-[0.781rem]">
-      {/* Formation & Style */}
-      <div className="bg-dapp-cardPrimary rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary">
-        <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-          <div className="flex items-center gap-[2.133rem] md:gap-[0.625rem]">
-            <Settings className="w-[4.267rem] h-[4.267rem] md:w-5 md:h-5 text-dapp-textPrimary" />
-            <div className="text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono">
-              Formation & Playing Style
-            </div>
-          </div>
-        </div>
-        <div className="p-[4.267rem] md:p-[1.25rem] grid grid-cols-1 gap-[4.267rem] md:gap-[1rem]">
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Formation
-            </label>
-            <select
-              value={config.formation}
-              onChange={(e) => handleConfigChange('formation', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              {formations.map(formation => (
-                <option key={formation.value} value={formation.value} className="bg-gray-800">
-                  {formation.name}
-                </option>
-              ))}
-            </select>
-            <div className="flex items-start gap-[1.067rem] md:gap-[0.313rem] mt-[2.133rem] md:mt-[0.625rem]">
-              <Info className="w-[3.2rem] h-[3.2rem] md:w-3 md:h-3 text-dapp-textSecondary mt-[0.533rem] md:mt-[0.156rem] flex-shrink-0" />
-              <p className="text-dapp-textSecondary text-content md:text-[0.781rem] leading-relaxed">
-                {formations.find(f => f.value === config.formation)?.description}
-              </p>
-            </div>
-          </div>
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Playing Style
-            </label>
-            <select
-              value={config.style}
-              onChange={(e) => handleConfigChange('style', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              {playingStyles.map(style => (
-                <option key={style.value} value={style.value} className="bg-gray-800">
-                  {style.name}
-                </option>
-              ))}
-            </select>
-            <div className="flex items-start gap-[1.067rem] md:gap-[0.313rem] mt-[2.133rem] md:mt-[0.625rem]">
-              <Info className="w-[3.2rem] h-[3.2rem] md:w-3 md:h-3 text-dapp-textSecondary mt-[0.533rem] md:mt-[0.156rem] flex-shrink-0" />
-              <p className="text-dapp-textSecondary text-content md:text-[0.781rem] leading-relaxed">
-                {playingStyles.find(s => s.value === config.style)?.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tempo & Mentality */}
-      <div className="bg-dapp-cardPrimary rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary">
-        <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-          <div className="flex items-center gap-[2.133rem] md:gap-[0.625rem]">
-            <Zap className="w-[4.267rem] h-[4.267rem] md:w-5 md:h-5 text-dapp-textPrimary" />
-            <div className="text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono">
-              Tempo & Mentality
-            </div>
-          </div>
-        </div>
-        <div className="p-[4.267rem] md:p-[1.25rem] grid grid-cols-1 gap-[4.267rem] md:gap-[1rem]">
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Tempo
-            </label>
-            <div className="flex gap-[1.6rem] md:gap-2">
-              {tempos.map(tempo => (
-                <button
-                  key={tempo.value}
-                  onClick={() => handleConfigChange('tempo', tempo.value)}
-                  className={`flex-1 py-[2.133rem] px-[3.2rem] md:py-2 md:px-3 rounded-[1.28rem] md:rounded-md text-subheader2 md:text-sm font-medium transition-colors ${
-                    config.tempo === tempo.value
-                      ? 'bg-dapp-textAccentTerq text-gray-900'
-                      : 'bg-white/5 text-dapp-textSecondary hover:bg-white/10'
-                  }`}
-                >
-                  {tempo.name}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-start gap-[1.067rem] md:gap-[0.313rem] mt-[2.133rem] md:mt-[0.625rem]">
-              <Info className="w-[3.2rem] h-[3.2rem] md:w-3 md:h-3 text-dapp-textSecondary mt-[0.533rem] md:mt-[0.156rem] flex-shrink-0" />
-              <p className="text-dapp-textSecondary text-content md:text-[0.781rem] leading-relaxed">
-                {tempos.find(t => t.value === config.tempo)?.description}
-              </p>
-            </div>
-          </div>
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Mentality
-            </label>
-            <select
-              value={config.mentality}
-              onChange={(e) => handleConfigChange('mentality', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              {mentalities.map(mentality => (
-                <option key={mentality.value} value={mentality.value} className="bg-gray-800">
-                  {mentality.name}
-                </option>
-              ))}
-            </select>
-            <div className="flex items-start gap-[1.067rem] md:gap-[0.313rem] mt-[2.133rem] md:mt-[0.625rem]">
-              <Info className="w-[3.2rem] h-[3.2rem] md:w-3 md:h-3 text-dapp-textSecondary mt-[0.533rem] md:mt-[0.156rem] flex-shrink-0" />
-              <p className="text-dapp-textSecondary text-content md:text-[0.781rem] leading-relaxed">
-                {mentalities.find(m => m.value === config.mentality)?.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Resource Allocation */}
-      <div className="bg-dapp-cardPrimary rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary">
-        <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-          <div className="flex items-center gap-[2.133rem] md:gap-[0.625rem]">
-            <DollarSign className="w-[4.267rem] h-[4.267rem] md:w-5 md:h-5 text-dapp-textPrimary" />
-            <div className="text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono">
-              Resource Allocation (Auto-Adjusted)
-            </div>
-          </div>
-        </div>
-        <div className="p-[4.267rem] md:p-[1.25rem] space-y-[4.267rem] md:space-y-4">
-          <div className="text-dapp-textSecondary text-subheader2 md:text-sm">
-            Total: {getTotalResources()}/240 points (automatically balanced based on your tactical choices)
-          </div>
-          {Object.entries(config.resources).map(([resource, value]) => (
-            <div key={resource}>
-              <div className="flex justify-between items-center mb-[2.133rem] md:mb-2">
-                <label className="text-dapp-textSecondary text-subheader2 md:text-sm font-medium capitalize">{resource}</label>
-                <span className="text-dapp-textSecondary text-subheader2 md:text-sm">{value} points</span>
-              </div>
-              <div className="w-full h-[1.6rem] md:h-2 bg-gray-200 rounded-lg relative">
-                <div 
-                  className="h-full bg-dapp-textAccentTerq rounded-lg transition-all duration-300"
-                  style={{ width: `${((value - 60) / 60) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Tactical Settings */}
-      <div className="bg-dapp-cardPrimary rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary">
-        <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-          <div className="flex items-center gap-[2.133rem] md:gap-[0.625rem]">
-            <Target className="w-[4.267rem] h-[4.267rem] md:w-5 md:h-5 text-dapp-textPrimary" />
-            <div className="text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono">
-              Tactical Settings
-            </div>
-          </div>
-        </div>
-        <div className="p-[4.267rem] md:p-[1.25rem] grid grid-cols-1 md:grid-cols-2 gap-[4.267rem] md:gap-[1rem]">
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Pressing Intensity
-            </label>
-            <select
-              value={config.pressing_intensity}
-              onChange={(e) => handleConfigChange('pressing_intensity', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              <option value="passive" className="bg-gray-800">Passive - Sit back and wait</option>
-              <option value="selective" className="bg-gray-800">Selective - Press in key areas</option>
-              <option value="swarm" className="bg-gray-800">Swarm - High intensity all over</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Risk/Reward
-            </label>
-            <select
-              value={config.risk_reward}
-              onChange={(e) => handleConfigChange('risk_reward', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              <option value="conservative" className="bg-gray-800">Conservative - Safe plays</option>
-              <option value="ambitious" className="bg-gray-800">Ambitious - Calculated risks</option>
-              <option value="hollywood" className="bg-gray-800">Hollywood - Spectacular attempts</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Fouling Strategy
-            </label>
-            <select
-              value={config.fouling_strategy}
-              onChange={(e) => handleConfigChange('fouling_strategy', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              <option value="clean" className="bg-gray-800">Clean - Minimal contact</option>
-              <option value="professional" className="bg-gray-800">Professional - Tactical fouls</option>
-              <option value="aggressive" className="bg-gray-800">Aggressive - Physical approach</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular mb-[2.133rem] md:mb-[0.625rem]">
-              Defensive Line
-            </label>
-            <select
-              value={config.defensive_line}
-              onChange={(e) => handleConfigChange('defensive_line', e.target.value)}
-              className="w-full px-[3.2rem] py-[2.133rem] md:px-3 md:py-2 bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md text-white focus:border-dapp-strokeSecondary outline-none"
-            >
-              <option value="high_line" className="bg-gray-800">High Line - Aggressive positioning</option>
-              <option value="medium_line" className="bg-gray-800">Medium Line - Balanced approach</option>
-              <option value="deep_block" className="bg-gray-800">Deep Block - Conservative defense</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Specialists */}
-      <div className="bg-dapp-cardPrimary rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary">
-        <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-          <div className="flex items-center gap-[2.133rem] md:gap-[0.625rem]">
-            <Star className="w-[4.267rem] h-[4.267rem] md:w-5 md:h-5 text-dapp-textPrimary" />
-            <div className="text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono">
-              Specialists ({config.specialists.length}/3)
-            </div>
-          </div>
-        </div>
-        <div className="p-[4.267rem] md:p-[1.25rem] space-y-[2.667rem] md:space-y-3">
-          <div className="text-dapp-textSecondary text-content md:text-[0.781rem]">
-            Choose up to 3 specialists to enhance your team's capabilities
-          </div>
-          {specialists.map(specialist => (
-            <div
-              key={specialist.id}
-              onClick={() => handleSpecialistToggle(specialist.id)}
-              className={`p-[3.2rem] md:p-3 rounded-[1.6rem] md:rounded-lg border-[0.267rem] md:border-2 cursor-pointer transition-all hover:shadow-md ${
-                config.specialists.includes(specialist.id)
-                  ? 'border-dapp-textAccentTerq bg-dapp-textAccentTerq/10'
-                  : 'border-dapp-strokeSecondary hover:border-dapp-strokeSecondary/60'
-              }`}
-            >
-              <div className="font-medium text-dapp-textPrimary text-subheader2 md:text-base mb-[1.067rem] md:mb-1">
-                {specialist.name}
-              </div>
-              <div className="text-dapp-textSecondary text-content md:text-sm mb-[1.067rem] md:mb-1">
-                {specialist.description}
-              </div>
-              <div className="text-dapp-textSecondary text-content md:text-xs">
-                Effects: {Object.entries(specialist.effects)
-                  .map(([stat, value]) => `${stat} ${value > 0 ? '+' : ''}${value}`)
-                  .join(', ')}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <select
+      value="Select a strategy..."
+      onChange={() => {}}
+      className="w-full bg-gray-800 border-gray-700 text-white px-3 py-2 rounded-lg focus:border-gray-600 appearance-none"
+    >
+      <option value="">Select a strategy...</option>
+      <option value="aggressive">Aggressive Formation</option>
+      <option value="defensive">Defensive Setup</option>
+      <option value="balanced">Balanced Approach</option>
+    </select>
   );
 };
 
