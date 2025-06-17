@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronDown, Users, Target, Zap, Shield, Clock, Lightbulb, AlertTriangle, MapPin, Star } from 'lucide-react';
 import {
@@ -498,29 +497,29 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
     const selectedOption = options.find(opt => opt.value === value);
     
     return (
-      <div className="space-y-2">
+      <div className="space-y-3">
         <label className="flex items-center gap-2 text-sm font-medium text-gray-300">
           <Icon className="w-4 h-4" />
           {label}
         </label>
         <Select value={value} onValueChange={onChange}>
-          <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white hover:bg-gray-750 transition-colors">
-            <div className="flex items-center gap-2">
+          <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white hover:bg-gray-750 transition-colors h-12">
+            <div className="flex items-center gap-3">
               <span className="text-lg">{selectedOption?.icon}</span>
               <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
             </div>
           </SelectTrigger>
           <SelectContent className="bg-gray-800 border-gray-700 text-white max-h-64 overflow-y-auto">
             <SelectGroup>
-              <SelectLabel className="text-gray-400 px-2 py-1">{label} Options</SelectLabel>
+              <SelectLabel className="text-gray-400 px-3 py-2">{label} Options</SelectLabel>
               {options.map((option) => (
                 <SelectItem 
                   key={option.value} 
                   value={option.value}
-                  className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer p-3"
+                  className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer p-4"
                 >
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center gap-2">
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center gap-3">
                       <span className="text-lg">{option.icon}</span>
                       <span className="font-medium">{option.name}</span>
                     </div>
@@ -539,15 +538,15 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
 
   const SpecialistDropdown = () => {
     return (
-      <div className="space-y-2">
+      <div className="space-y-3">
         <label className="flex items-center gap-2 text-sm font-medium text-gray-300">
           <Star className="w-4 h-4" />
           Specialists ({config.specialists.length}/3)
         </label>
         <Popover open={openDropdown === 'specialists'} onOpenChange={(open) => setOpenDropdown(open ? 'specialists' : null)}>
           <PopoverTrigger asChild>
-            <button className="w-full bg-gray-800 border border-gray-700 text-white px-3 py-2 rounded-lg hover:bg-gray-750 transition-colors flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <button className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-750 transition-colors flex items-center justify-between h-12">
+              <div className="flex items-center gap-3">
                 <Star className="w-4 h-4" />
                 <span>
                   {config.specialists.length > 0 
@@ -560,11 +559,11 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-80 bg-gray-800 border-gray-700 text-white p-0 max-h-96 overflow-y-auto">
-            <div className="p-3 border-b border-gray-700">
+            <div className="p-4 border-b border-gray-700">
               <h3 className="font-medium text-gray-200">Available Specialists</h3>
-              <p className="text-xs text-gray-400">Choose up to 3 specialists for your team</p>
+              <p className="text-xs text-gray-400 mt-1">Choose up to 3 specialists for your team</p>
             </div>
-            <div className="p-2 space-y-1">
+            <div className="p-3 space-y-2">
               {specialists.map((specialist) => {
                 const isSelected = config.specialists.includes(specialist.id);
                 const canSelect = config.specialists.length < 3 || isSelected;
@@ -572,7 +571,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
                 return (
                   <div
                     key={specialist.id}
-                    className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                    className={`p-4 rounded-lg cursor-pointer transition-colors ${
                       isSelected 
                         ? 'bg-blue-600/20 border border-blue-500/50' 
                         : canSelect 
@@ -590,7 +589,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
                         </div>
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-2">
                           <span className="text-lg">{specialist.icon}</span>
                           <span className="font-medium text-sm">{specialist.name}</span>
                         </div>
@@ -687,22 +686,22 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       <SpecialistDropdown />
 
       {/* Resource Allocation Display */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h4 className="text-sm font-medium text-gray-300 flex items-center gap-2">
           <Shield className="w-4 h-4" />
           Resource Allocation (Auto-calculated)
         </h4>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="bg-gray-800 p-3 rounded-lg border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Attack</div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-gray-800 p-4 rounded-lg border border-gray-700">
+            <div className="text-xs text-gray-400 mb-2">Attack</div>
             <div className="text-lg font-semibold text-red-400">{config.resources.attack}</div>
           </div>
-          <div className="bg-gray-800 p-3 rounded-lg border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Midfield</div>
+          <div className="bg-gray-800 p-4 rounded-lg border border-gray-700">
+            <div className="text-xs text-gray-400 mb-2">Midfield</div>
             <div className="text-lg font-semibold text-yellow-400">{config.resources.midfield}</div>
           </div>
-          <div className="bg-gray-800 p-3 rounded-lg border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Defense</div>
+          <div className="bg-gray-800 p-4 rounded-lg border border-gray-700">
+            <div className="text-xs text-gray-400 mb-2">Defense</div>
             <div className="text-lg font-semibold text-blue-400">{config.resources.defense}</div>
           </div>
         </div>
