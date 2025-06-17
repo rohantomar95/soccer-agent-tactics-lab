@@ -172,14 +172,18 @@ const DappCreateAgentModal: React.FC<{
     }
 
     if (!name) newErrors.name = "Please enter agent name";
-    if (!systemPrompt) newErrors.systemPrompt = "Please enter a system prompt";
+    
+    // Only require system prompt for non-soccer spaces
+    if (!isSoccerSpace() && !systemPrompt) {
+      newErrors.systemPrompt = "Please enter a system prompt";
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors((prev) => ({ ...prev, ...newErrors }));
 
       // Scroll to the first missing field
       if (!name) agentNameRef.current?.scrollIntoView({ behavior: "smooth" });
-      else if (!systemPrompt) systemPromptRef.current?.scrollIntoView({ behavior: "smooth" });
+      else if (!systemPrompt && !isSoccerSpace()) systemPromptRef.current?.scrollIntoView({ behavior: "smooth" });
 
       return;
     }
@@ -197,7 +201,7 @@ const DappCreateAgentModal: React.FC<{
         name,
         battleType: battleType,
         sessionTypeId: selectedSpace,
-        systemPrompt,
+        systemPrompt: isSoccerSpace() ? "Soccer tactical configuration" : systemPrompt,
         avatarLink: generatedImageLink,
       };
 
@@ -378,6 +382,108 @@ const DappCreateAgentModal: React.FC<{
               </div>
             </div>
 
+            {/* Agent Name */}
+            <div className="w-full h-full px-[3.2rem] md:px-0">
+              <div className="flex flex-col w-full relative items-start self-stretch backdrop-blur-[220px] brightness-100 gap-[2.667rem] md:gap-[0.781rem] rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary bg-dapp-cardPrimary">
+                <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
+                  <div className="flex-1 md:leading-[1.25rem] tracking-[-0.021rem] md:tracking-[-0.006rem] text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono md:ml-[0.17rem]">
+                    Team Name
+                  </div>
+                </div>
+
+                <div className="px-[4.267rem] md:px-[1.25rem] pb-[4.267rem] md:pb-[1.25rem] w-full flex flex-col gap-[4.267rem] md:gap-[0.5rem] items-start">
+                  <div
+                    className="flex flex-col flex-none items-start self-stretch relative w-full gap-[2.133rem] md:gap-0"
+                    ref={agentNameRef}
+                  >
+                    <div className="flex w-full items-center self-stretch gap-[2.133rem] md:gap-[0.625rem] h-[6.4rem] md:h-[1.875rem]">
+                      <div className="relative flex flex-1 md:leading-[1.094rem] text-left text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular">
+                        Team Name
+                      </div>
+                      <div className="relative items-center rounded-[1.067rem] md:rounded-[0.313rem] inline-flex flex-none gap-[1.6rem] md:gap-[0.469rem] py-[1.6rem] md:py-[0.469rem]">
+                        <Sparkles className="size-[3.2rem] md:size-[0.938rem] text-dapp-textAccentTerq" />
+                        <button
+                          onClick={handleGenerateName}
+                          className="flex w-fit whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral"
+                        >
+                          Generate with AI
+                        </button>
+                      </div>
+                    </div>
+
+                    <Input
+                      value={name}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setName(e.target.value);
+                        setErrors((prev) => ({ ...prev, name: "" }));
+                      }}
+                      placeholder="Enter team name"
+                      maxLength={AGENT_NAME_LENGTH}
+                      className="w-full bg-white/5 border border-dapp-strokeSecondary text-white"
+                    />
+                    {errors.name && (
+                      <p className="flex self-stretch md:leading-[1.094rem] text-left relative text-content md:text-[0.938rem] text-[#fd827a] font-normal font-sourceSansRegular mt-[2.133rem] md:mt-[0.313rem]">
+                        {errors.name}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Avatar Upload */}
+            <div className="w-full h-full px-[3.2rem] md:px-0">
+              <div className="flex flex-col w-full relative items-start self-stretch backdrop-blur-[220px] brightness-100 gap-[2.667rem] md:gap-[0.781rem] rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary bg-dapp-cardPrimary">
+                <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
+                  <div className="flex-1 md:leading-[1.25rem] tracking-[-0.021rem] md:tracking-[-0.006rem] text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono md:ml-[0.17rem]">
+                    Team Avatar
+                  </div>
+                </div>
+
+                <div className="px-[4.267rem] md:px-[1.25rem] pb-[4.267rem] md:pb-[1.25rem] w-full flex flex-col gap-[4.267rem] md:gap-[0.5rem] items-start">
+                  <div className="flex relative w-full items-start flex-none flex-col gap-[2.133rem] md:gap-[0.625rem]">
+                    <div className="flex flex-none w-full relative items-center self-stretch bg-dapp-surfaceMenu border-[0.133rem] md:border-[0.039rem] border-dapp-strokeSecondary rounded-[2.133rem] md:rounded-[0.625rem] justify-between py-[2.133rem] md:py-[0.625rem] px-[3.2rem] md:px-[0.938rem]">
+                      {image ? (
+                        <img
+                          src={blobUrl || ""}
+                          alt="Agent"
+                          className="size-[12.8rem] md:size-[3rem] object-cover rounded-[1.6rem] md:rounded-[0.469rem]"
+                        />
+                      ) : generatedImageLink ? (
+                        <img
+                          src={generatedImageLink || ""}
+                          alt="Agent"
+                          className="size-[12.8rem] md:size-[3rem] object-cover rounded-[1.6rem] md:rounded-[0.469rem]"
+                        />
+                      ) : (
+                        <div className="size-[12.8rem] md:size-[3rem] bg-gray-200 rounded-[1.6rem] md:rounded-[0.469rem] flex items-center justify-center">
+                          <span className="text-gray-400 text-xs">No Image</span>
+                        </div>
+                      )}
+
+                      <div className="inline-flex relative justify-center items-start flex-none flex-col md:gap-[0.313rem]">
+                        <div
+                          className="inline-flex flex-none items-center bg-dapp-buttonTertiary rounded-[1.6rem] md:rounded-[0.469rem] gap-[1.6rem] md:gap-[0.469rem] py-[2.133rem] md:py-[0.469rem] px-[3.2rem] md:px-[0.938rem] cursor-pointer"
+                          onClick={() => document.getElementById("image-upload")?.click()}
+                        >
+                          <div className="w-fit whitespace-nowrap text-center md:leading-[0.938rem] font-normal font-polySansTrialNeutral text-content md:text-[0.781rem] text-dapp-textPrimary">
+                            Change Avatar
+                          </div>
+                        </div>
+                        <input
+                          id="image-upload"
+                          type="file"
+                          accept="image/png,image/jpeg"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Soccer Configuration - only show if soccer space is selected */}
             {isSoccerSpace() && (
               <div className="w-full h-full px-[3.2rem] md:px-0">
@@ -388,150 +494,72 @@ const DappCreateAgentModal: React.FC<{
               </div>
             )}
 
-            {/* Agent Info */}
-            <div className="w-full h-full relative px-[3.2rem] md:px-0">
-              <div className="flex flex-col w-full relative items-start self-stretch backdrop-blur-[220px] brightness-100 gap-[2.667rem] md:gap-[0.781rem] rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary bg-dapp-cardPrimary">
-                <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
-                  <div className="flex-1 md:leading-[1.25rem] tracking-[-0.021rem] md:tracking-[-0.006rem] text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono md:ml-[0.17rem]">
-                    Agent info
+            {/* System Prompt - only show for non-soccer spaces */}
+            {!isSoccerSpace() && (
+              <div className="w-full h-full relative px-[3.2rem] md:px-0">
+                <div className="flex flex-col w-full relative items-start self-stretch backdrop-blur-[220px] brightness-100 gap-[2.667rem] md:gap-[0.781rem] rounded-[3.2rem] md:rounded-[0.938rem] border-[0.267rem] md:border-[0.078rem] border-dapp-strokeSecondary bg-dapp-cardPrimary">
+                  <div className="flex items-center w-full p-[4.267rem] md:p-[1.1rem] justify-between h-[12.8rem] md:h-[3rem] bg-dapp-surfaceCardTitle">
+                    <div className="flex-1 md:leading-[1.25rem] tracking-[-0.021rem] md:tracking-[-0.006rem] text-dapp-textPrimary text-subheader md:text-[1.1rem] font-semibold font-polySansTrialMedianMono md:ml-[0.17rem]">
+                      Agent Behavior
+                    </div>
                   </div>
-                </div>
 
-                <div className="px-[4.267rem] md:px-[1.25rem] pb-[4.267rem] md:pb-[1.25rem] w-full flex flex-col gap-[4.267rem] md:gap-[0.5rem] items-start">
-                  <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-[4.267rem] md:gap-[1rem]">
-                    {/* Agent Name */}
+                  <div className="px-[4.267rem] md:px-[1.25rem] pb-[4.267rem] md:pb-[1.25rem] w-full flex flex-col gap-[4.267rem] md:gap-[0.5rem] items-start">
+                    {/* System Prompt */}
                     <div
                       className="flex flex-col flex-none items-start self-stretch relative w-full gap-[2.133rem] md:gap-0"
-                      ref={agentNameRef}
+                      ref={systemPromptRef}
                     >
                       <div className="flex w-full items-center self-stretch gap-[2.133rem] md:gap-[0.625rem] h-[6.4rem] md:h-[1.875rem]">
                         <div className="relative flex flex-1 md:leading-[1.094rem] text-left text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular">
-                          Agent Name
+                          System Prompt
                         </div>
                         <div className="relative items-center rounded-[1.067rem] md:rounded-[0.313rem] inline-flex flex-none gap-[1.6rem] md:gap-[0.469rem] py-[1.6rem] md:py-[0.469rem]">
-                          <Sparkles className="size-[3.2rem] md:size-[0.938rem] text-dapp-textAccentTerq" />
-                          <button
-                            onClick={handleGenerateName}
-                            className="flex w-fit whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral"
-                          >
-                            Generate with AI
-                          </button>
+                          {isGenerating ? (
+                            <div className="flex items-center">
+                              <div className="animate-spin rounded-full h-[3.2rem] w-[3.2rem] md:h-[0.938rem] md:w-[0.938rem] border-t-2 border-b-2 border-dapp-textAccentTerq"></div>
+                              <span className="ml-[1.6rem] md:ml-[0.469rem] whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral">
+                                Generating...
+                              </span>
+                            </div>
+                          ) : (
+                            <>
+                              <Sparkles className="size-[3.2rem] md:size-[0.938rem] text-dapp-textAccentTerq" />
+                              <button
+                                onClick={handlePromptAI}
+                                disabled={isGenerating}
+                                className="flex w-fit whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral"
+                              >
+                                Generate with AI
+                              </button>
+                            </>
+                          )}
                         </div>
                       </div>
 
-                      <Input
-                        value={name}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setName(e.target.value);
-                          setErrors((prev) => ({ ...prev, name: "" }));
+                      <Textarea
+                        value={systemPrompt}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                          setSystemPrompt(e.target.value);
+                          setErrors((prev) => ({ ...prev, systemPrompt: "" }));
                         }}
-                        placeholder="Enter agent name"
-                        maxLength={AGENT_NAME_LENGTH}
-                        className="w-full bg-white/5 border border-dapp-strokeSecondary text-white"
+                        className="w-full h-[32rem] md:h-[13rem] bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md px-[2.56rem] py-[1.707rem] md:px-3 md:py-2 focus:border-dapp-strokeSecondary text-white resize-none outline-none"
+                        placeholder={SPACE_PROMPT_PLACEHOLDER_MAP[selectedSpace]}
+                        maxLength={characterLimit}
                       />
-                      {errors.name && (
-                        <p className="flex self-stretch md:leading-[1.094rem] text-left relative text-content md:text-[0.938rem] text-[#fd827a] font-normal font-sourceSansRegular mt-[2.133rem] md:mt-[0.313rem]">
-                          {errors.name}
+                      {errors.systemPrompt && (
+                        <p className="flex self-stretch md:leading-[1.094rem] text-left text-content md:text-[0.938rem] text-[#fd827a] font-normal font-sourceSansRegular">
+                          {errors.systemPrompt}
                         </p>
                       )}
-                    </div>
-
-                    {/* Avatar Upload */}
-                    <div className="flex relative w-full items-start flex-none flex-col gap-[2.133rem] md:gap-[0.625rem]">
-                      <div className="flex flex-none w-full relative items-center self-stretch bg-dapp-surfaceMenu border-[0.133rem] md:border-[0.039rem] border-dapp-strokeSecondary rounded-[2.133rem] md:rounded-[0.625rem] justify-between py-[2.133rem] md:py-[0.625rem] px-[3.2rem] md:px-[0.938rem]">
-                        {image ? (
-                          <img
-                            src={blobUrl || ""}
-                            alt="Agent"
-                            className="size-[12.8rem] md:size-[3rem] object-cover rounded-[1.6rem] md:rounded-[0.469rem]"
-                          />
-                        ) : generatedImageLink ? (
-                          <img
-                            src={generatedImageLink || ""}
-                            alt="Agent"
-                            className="size-[12.8rem] md:size-[3rem] object-cover rounded-[1.6rem] md:rounded-[0.469rem]"
-                          />
-                        ) : (
-                          <div className="size-[12.8rem] md:size-[3rem] bg-gray-200 rounded-[1.6rem] md:rounded-[0.469rem] flex items-center justify-center">
-                            <span className="text-gray-400 text-xs">No Image</span>
-                          </div>
-                        )}
-
-                        <div className="inline-flex relative justify-center items-start flex-none flex-col md:gap-[0.313rem]">
-                          <div
-                            className="inline-flex flex-none items-center bg-dapp-buttonTertiary rounded-[1.6rem] md:rounded-[0.469rem] gap-[1.6rem] md:gap-[0.469rem] py-[2.133rem] md:py-[0.469rem] px-[3.2rem] md:px-[0.938rem] cursor-pointer"
-                            onClick={() => document.getElementById("image-upload")?.click()}
-                          >
-                            <div className="w-fit whitespace-nowrap text-center md:leading-[0.938rem] font-normal font-polySansTrialNeutral text-content md:text-[0.781rem] text-dapp-textPrimary">
-                              Change Avatar
-                            </div>
-                          </div>
-                          <input
-                            id="image-upload"
-                            type="file"
-                            accept="image/png,image/jpeg"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                          />
-                        </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        {systemPrompt.length}/{characterLimit} characters
                       </div>
-                    </div>
-                  </div>
-
-                  {/* System Prompt */}
-                  <div
-                    className="flex flex-col flex-none items-start self-stretch relative w-full gap-[2.133rem] md:gap-0"
-                    ref={systemPromptRef}
-                  >
-                    <div className="flex w-full items-center self-stretch gap-[2.133rem] md:gap-[0.625rem] h-[6.4rem] md:h-[1.875rem]">
-                      <div className="relative flex flex-1 md:leading-[1.094rem] text-left text-dapp-textSecondary text-subheader2 md:text-[0.938rem] font-normal font-sourceSansRegular">
-                        System Prompt
-                      </div>
-                      <div className="relative items-center rounded-[1.067rem] md:rounded-[0.313rem] inline-flex flex-none gap-[1.6rem] md:gap-[0.469rem] py-[1.6rem] md:py-[0.469rem]">
-                        {isGenerating ? (
-                          <div className="flex items-center">
-                            <div className="animate-spin rounded-full h-[3.2rem] w-[3.2rem] md:h-[0.938rem] md:w-[0.938rem] border-t-2 border-b-2 border-dapp-textAccentTerq"></div>
-                            <span className="ml-[1.6rem] md:ml-[0.469rem] whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral">
-                              Generating...
-                            </span>
-                          </div>
-                        ) : (
-                          <>
-                            <Sparkles className="size-[3.2rem] md:size-[0.938rem] text-dapp-textAccentTerq" />
-                            <button
-                              onClick={handlePromptAI}
-                              disabled={isGenerating}
-                              className="flex w-fit whitespace-nowrap text-left relative md:leading-[1.094rem] text-content md:text-[0.781rem] text-dapp-textAccentTerq font-normal font-polySansTrialNeutral"
-                            >
-                              Generate with AI
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-
-                    <Textarea
-                      value={systemPrompt}
-                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                        setSystemPrompt(e.target.value);
-                        setErrors((prev) => ({ ...prev, systemPrompt: "" }));
-                      }}
-                      className="w-full h-[32rem] md:h-[13rem] bg-white/5 border border-dapp-strokeSecondary rounded-[1.28rem] md:rounded-md px-[2.56rem] py-[1.707rem] md:px-3 md:py-2 focus:border-dapp-strokeSecondary text-white resize-none outline-none"
-                      placeholder={SPACE_PROMPT_PLACEHOLDER_MAP[selectedSpace]}
-                      maxLength={characterLimit}
-                    />
-                    {errors.systemPrompt && (
-                      <p className="flex self-stretch md:leading-[1.094rem] text-left text-content md:text-[0.938rem] text-[#fd827a] font-normal font-sourceSansRegular">
-                        {errors.systemPrompt}
-                      </p>
-                    )}
-                    <div className="text-xs text-gray-500 mt-1">
-                      {systemPrompt.length}/{characterLimit} characters
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Create Button */}
             <div className="px-[3.2rem] md:px-0 w-full">
