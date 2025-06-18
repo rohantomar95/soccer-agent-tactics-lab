@@ -48,7 +48,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
   const predefinedStrategies = [
     {
       value: 'attacking',
-      name: '⚔️ All-Out Attack',
+      name: 'All-Out Attack',
       description: 'Score lots of goals with aggressive attacking play',
       config: {
         formation: '4-3-3',
@@ -64,7 +64,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
     },
     {
       value: 'balanced',
-      name: '⚖️ Balanced Play',
+      name: 'Balanced Play',
       description: 'Well-rounded approach with equal focus on attack and defense',
       config: {
         formation: '4-4-2',
@@ -80,7 +80,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
     },
     {
       value: 'defensive',
-      name: '🛡️ Solid Defense',
+      name: 'Solid Defense',
       description: 'Rock-solid defense with counter-attacking opportunities',
       config: {
         formation: '5-3-2',
@@ -96,7 +96,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
     },
     {
       value: 'counter',
-      name: '⚡ Counter Attack',
+      name: 'Counter Attack',
       description: 'Fast transitions and quick strikes on the break',
       config: {
         formation: '4-2-3-1',
@@ -113,22 +113,22 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
   ];
 
   const playStyles = [
-    { value: 'possession', name: '🎯 Possession', description: 'Keep the ball and build patiently' },
-    { value: 'attacking', name: '⚔️ Attacking', description: 'Go forward and score goals' },
-    { value: 'defensive', name: '🛡️ Defensive', description: 'Stay solid and defend well' },
-    { value: 'counter', name: '⚡ Counter', description: 'Quick attacks on the break' }
+    { value: 'possession', name: 'Possession', description: 'Keep the ball and build patiently' },
+    { value: 'attacking', name: 'Attacking', description: 'Go forward and score goals' },
+    { value: 'defensive', name: 'Defensive', description: 'Stay solid and defend well' },
+    { value: 'counter', name: 'Counter', description: 'Quick attacks on the break' }
   ];
 
   const intensityLevels = [
-    { value: 'passive', name: '😴 Relaxed', description: 'Save energy, stay calm' },
-    { value: 'selective', name: '🧠 Smart', description: 'Press at the right moments' },
-    { value: 'swarm', name: '🐝 Intense', description: 'High pressure everywhere' }
+    { value: 'passive', name: 'Relaxed', description: 'Save energy, stay calm' },
+    { value: 'selective', name: 'Smart', description: 'Press at the right moments' },
+    { value: 'swarm', name: 'Intense', description: 'High pressure everywhere' }
   ];
 
   const teamMentalities = [
-    { value: 'defensive', name: '🛡️ Defensive', description: 'Safety first approach' },
-    { value: 'balanced', name: '⚖️ Balanced', description: 'Equal focus on both ends' },
-    { value: 'attacking', name: '⚔️ Attacking', description: 'Go for goals aggressively' }
+    { value: 'defensive', name: 'Defensive', description: 'Safety first approach' },
+    { value: 'balanced', name: 'Balanced', description: 'Equal focus on both ends' },
+    { value: 'attacking', name: 'Attacking', description: 'Go for goals aggressively' }
   ];
 
   // ... keep existing code (formations, playingStyles, tempos, mentalities, etc. arrays)
@@ -137,63 +137,54 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: '4-4-2', 
       name: '4-4-2 Classic', 
       description: 'Balanced formation with strong midfield presence. Good for possession and counter-attacks.',
-      icon: '⚖️',
       resourceBonus: { attack: 5, midfield: 10, defense: 5 }
     },
     { 
       value: '4-3-3', 
       name: '4-3-3 Attacking', 
       description: 'Offensive formation with wide wingers. High attacking threat but vulnerable on flanks.',
-      icon: '⚔️',
       resourceBonus: { attack: 15, midfield: 0, defense: -5 }
     },
     { 
       value: '4-2-3-1', 
       name: '4-2-3-1 Creative', 
       description: 'Modern formation with creative midfielder. Great for building attacks through the center.',
-      icon: '🎨',
       resourceBonus: { attack: 10, midfield: 15, defense: -5 }
     },
     { 
       value: '3-5-2', 
       name: '3-5-2 Wing-backs', 
       description: 'Dynamic formation with attacking wing-backs. Dominates midfield but risky in defense.',
-      icon: '🚀',
       resourceBonus: { attack: 10, midfield: 20, defense: -10 }
     },
     { 
       value: '5-3-2', 
       name: '5-3-2 Defensive', 
       description: 'Solid defensive setup with counter-attacking potential. Very hard to break down.',
-      icon: '🛡️',
       resourceBonus: { attack: -10, midfield: 5, defense: 25 }
     },
     { 
       value: '4-1-4-1', 
       name: '4-1-4-1 Compact', 
       description: 'Compact formation with defensive midfielder. Excellent for pressing and transitions.',
-      icon: '🔒',
       resourceBonus: { attack: 0, midfield: 10, defense: 10 }
     },
     { 
       value: '3-4-3', 
       name: '3-4-3 Wide Attack', 
       description: 'Aggressive formation with wide attacking players. Overwhelming in attack, exposed in defense.',
-      icon: '🔥',
       resourceBonus: { attack: 20, midfield: 5, defense: -15 }
     },
     { 
       value: '4-5-1', 
       name: '4-5-1 Defensive', 
       description: 'Ultra-defensive setup with packed midfield. Excellent for soaking pressure and countering.',
-      icon: '🏰',
       resourceBonus: { attack: -15, midfield: 20, defense: 20 }
     },
     { 
       value: '5-4-1', 
       name: '5-4-1 Ultra-Defensive', 
       description: 'Maximum defensive stability. Nearly impossible to break down but limited attacking options.',
-      icon: '⛔',
       resourceBonus: { attack: -20, midfield: 10, defense: 30 }
     }
   ];
@@ -203,49 +194,42 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'possession', 
       name: 'Possession', 
       description: 'Patient build-up play, keeping the ball and waiting for openings. High pass accuracy.',
-      icon: '🎯',
       resourceBonus: { attack: 0, midfield: 15, defense: 5 }
     },
     { 
       value: 'counter', 
       name: 'Counter-Attack', 
       description: 'Quick transitions from defense to attack. Fast, direct play to catch opponents off-guard.',
-      icon: '⚡',
       resourceBonus: { attack: 20, midfield: -5, defense: 5 }
     },
     { 
       value: 'attacking', 
       name: 'All-Out Attack', 
       description: 'Aggressive forward play with many players in attack. High risk, high reward approach.',
-      icon: '🗡️',
       resourceBonus: { attack: 25, midfield: 0, defense: -15 }
     },
     { 
       value: 'defensive', 
       name: 'Defensive', 
       description: 'Solid defensive block, hard to break down. Focus on clean sheets and set pieces.',
-      icon: '🛡️',
       resourceBonus: { attack: -15, midfield: 0, defense: 25 }
     },
     { 
       value: 'pressing', 
       name: 'High Pressing', 
       description: 'Intense pressure all over the pitch. Wins ball high up but exhausting for players.',
-      icon: '🔄',
       resourceBonus: { attack: 15, midfield: 15, defense: -10 }
     },
     { 
       value: 'direct', 
       name: 'Direct Play', 
       description: 'Long balls and aerial duels. Bypasses midfield to create quick chances.',
-      icon: '📏',
       resourceBonus: { attack: 15, midfield: -10, defense: 10 }
     },
     { 
       value: 'technical', 
       name: 'Technical', 
       description: 'Short passing and technical skill focus. Beautiful football but can be predictable.',
-      icon: '⚽',
       resourceBonus: { attack: 10, midfield: 20, defense: -5 }
     }
   ];
@@ -255,21 +239,18 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'slow', 
       name: 'Slow Tempo', 
       description: 'Methodical build-up, patient passing. Conserves energy and reduces mistakes.',
-      icon: '🐌',
       resourceBonus: { attack: -5, midfield: 10, defense: 10 }
     },
     { 
       value: 'medium', 
       name: 'Medium Tempo', 
       description: 'Balanced tempo with variety in play. Adapts to game situations effectively.',
-      icon: '⚖️',
       resourceBonus: { attack: 0, midfield: 5, defense: 5 }
     },
     { 
       value: 'fast', 
       name: 'Fast Tempo', 
       description: 'High-intensity, quick passing. Overwhelms opponents but requires high fitness.',
-      icon: '🏃',
       resourceBonus: { attack: 15, midfield: 0, defense: -5 }
     }
   ];
@@ -279,42 +260,36 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'defensive', 
       name: 'Defensive', 
       description: 'Priority on not conceding. Low defensive line, compact shape.',
-      icon: '🛡️',
       resourceBonus: { attack: -10, midfield: 0, defense: 20 }
     },
     { 
       value: 'cautious', 
       name: 'Cautious', 
       description: 'Careful approach with emphasis on security. Waits for clear opportunities.',
-      icon: '⚠️',
       resourceBonus: { attack: -5, midfield: 5, defense: 10 }
     },
     { 
       value: 'balanced', 
       name: 'Balanced', 
       description: 'Equal focus on attack and defense. Adaptable to game flow.',
-      icon: '⚖️',
       resourceBonus: { attack: 5, midfield: 5, defense: 5 }
     },
     { 
       value: 'positive', 
       name: 'Positive', 
       description: 'Confident attacking approach. Looks to create chances regularly.',
-      icon: '📈',
       resourceBonus: { attack: 10, midfield: 0, defense: -5 }
     },
     { 
       value: 'attacking', 
       name: 'Attacking', 
       description: 'Focus on scoring goals. Higher defensive line, more players forward.',
-      icon: '⚔️',
       resourceBonus: { attack: 20, midfield: 0, defense: -10 }
     },
     { 
       value: 'overload', 
       name: 'Overload Attack', 
       description: 'All-out assault on goal. Maximum attacking commitment, defensive risks.',
-      icon: '💥',
       resourceBonus: { attack: 30, midfield: 0, defense: -20 }
     }
   ];
@@ -324,19 +299,16 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'passive',
       name: 'Passive',
       description: 'Conservative pressing. Saves energy and maintains defensive shape.',
-      icon: '😴',
     },
     {
       value: 'selective',
       name: 'Selective',
       description: 'Smart pressing in key moments. Balanced approach with tactical awareness.',
-      icon: '🧠',
     },
     {
       value: 'swarm',
       name: 'Swarm',
       description: 'Aggressive all-out pressing. High intensity but drains stamina quickly.',
-      icon: '🐝',
     }
   ];
 
@@ -345,19 +317,16 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'conservative',
       name: 'Conservative',
       description: 'Safe passing and low-risk plays. High success rate but limited creativity.',
-      icon: '🛡️',
     },
     {
       value: 'ambitious',
       name: 'Ambitious',
       description: 'Balanced risk-taking. Good mix of safety and creative opportunities.',
-      icon: '🎯',
     },
     {
       value: 'hollywood',
       name: 'Hollywood',
       description: 'High-risk, spectacular plays. Low success rate but potential for brilliance.',
-      icon: '🌟',
     }
   ];
 
@@ -366,19 +335,16 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'clean',
       name: 'Clean',
       description: 'Minimal fouling, fair play approach. Lower card risk but allows opponent flow.',
-      icon: '✨',
     },
     {
       value: 'professional',
       name: 'Professional',
       description: 'Strategic fouling when necessary. Stops dangerous attacks professionally.',
-      icon: '👔',
     },
     {
       value: 'aggressive',
       name: 'Aggressive',
       description: 'Physical intimidation tactics. High card risk but disrupts opponent rhythm.',
-      icon: '⚡',
     }
   ];
 
@@ -387,19 +353,16 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       value: 'high_line',
       name: 'High Line',
       description: 'Advanced defensive position. Great for offside trap but vulnerable to pace.',
-      icon: '⬆️',
     },
     {
       value: 'medium_line',
       name: 'Medium Line',
       description: 'Balanced defensive positioning. Adaptable to different game situations.',
-      icon: '➡️',
     },
     {
       value: 'deep_block',
       name: 'Deep Block',
       description: 'Conservative defensive positioning. Solid but concedes space to opponent.',
-      icon: '⬇️',
     }
   ];
 
@@ -408,7 +371,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'pace_merchant', 
       name: 'Pace Merchant', 
       description: 'Lightning-fast winger who burns past defenders on the flanks.',
-      icon: '💨',
       effects: { pace: 35, attack: 40, creativity: -10 },
       resourceCost: { attack: 15, midfield: -5, defense: 0 }
     },
@@ -416,7 +378,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'playmaker', 
       name: 'Playmaker', 
       description: 'Creative genius who threads perfect passes and controls the tempo.',
-      icon: '🎨',
       effects: { creativity: 25, midfield: 30, defense: -10 },
       resourceCost: { attack: 5, midfield: 20, defense: -10 }
     },
@@ -424,7 +385,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'destroyer', 
       name: 'Destroyer', 
       description: 'Physical midfielder who breaks up play and wins every tackle.',
-      icon: '💥',
       effects: { physicality: 30, defense: 25, creativity: -20 },
       resourceCost: { attack: -10, midfield: 10, defense: 20 }
     },
@@ -432,7 +392,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'target_man', 
       name: 'Target Man', 
       description: 'Powerful striker who dominates in the air and holds up play.',
-      icon: '🎯',
       effects: { strength: 35, aerial: 40, pace: -15 },
       resourceCost: { attack: 25, midfield: -5, defense: 0 }
     },
@@ -440,7 +399,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'sweeper_keeper', 
       name: 'Sweeper Keeper', 
       description: 'Modern goalkeeper who acts as an extra defender and starts attacks.',
-      icon: '🧤',
       effects: { distribution: 30, defense: 20, aerial: 15 },
       resourceCost: { attack: 5, midfield: 5, defense: 15 }
     },
@@ -448,7 +406,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'wing_back', 
       name: 'Attacking Wing-Back', 
       description: 'Tireless defender who provides width in attack and tracks back.',
-      icon: '🏃‍♂️',
       effects: { stamina: 40, crossing: 25, pace: 20 },
       resourceCost: { attack: 15, midfield: 15, defense: 5 }
     },
@@ -456,7 +413,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'box_to_box', 
       name: 'Box-to-Box Midfielder', 
       description: 'Complete midfielder who contributes in all phases of play.',
-      icon: '🔄',
       effects: { stamina: 35, versatility: 30, consistency: 25 },
       resourceCost: { attack: 10, midfield: 25, defense: 10 }
     },
@@ -464,7 +420,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'false_nine', 
       name: 'False 9', 
       description: 'Clever striker who drops deep to create space and confusion.',
-      icon: '🎭',
       effects: { creativity: 30, movement: 35, finishing: -10 },
       resourceCost: { attack: 10, midfield: 20, defense: 0 }
     },
@@ -472,7 +427,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'set_piece_specialist', 
       name: 'Set Piece Specialist', 
       description: 'Master of dead ball situations. Deadly from free kicks and corners.',
-      icon: '🎯',
       effects: { free_kicks: 60, corners: 45, open_play: -15 },
       resourceCost: { attack: 20, midfield: 10, defense: 0 }
     },
@@ -480,7 +434,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
       id: 'dead_ball_specialist', 
       name: 'Penalty Expert', 
       description: 'Ice-cold from the penalty spot and dangerous from all set pieces.',
-      icon: '🥅',
       effects: { penalties: 70, free_kicks: 50, pressure_handling: 40 },
       resourceCost: { attack: 15, midfield: 5, defense: 0 }
     }
@@ -618,21 +571,18 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
     label, 
     value, 
     options, 
-    onChange, 
-    icon: Icon 
+    onChange 
   }: { 
     label: string; 
     value: string; 
     options: any[]; 
     onChange: (value: string) => void;
-    icon: any;
   }) => {
     const selectedOption = options.find(opt => opt.value === value);
     
     return (
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-200">
-          <Icon className="w-4 h-4" />
+        <label className="text-sm font-medium text-gray-200">
           {label}
         </label>
         <Select value={value} onValueChange={onChange}>
@@ -685,7 +635,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
         <Select value={value} onValueChange={onChange}>
           <SelectTrigger className="w-full bg-gray-800/80 border-gray-600 text-white hover:bg-gray-700/80 transition-colors h-14 px-4">
             <div className="flex items-center gap-3 w-full">
-              <span className="text-xl flex-shrink-0">{selectedOption?.icon}</span>
               <div className="flex-1 text-left">
                 <div className="font-medium text-white">{selectedOption?.name}</div>
                 <div className="text-xs text-gray-400 truncate">{selectedOption?.description}</div>
@@ -702,7 +651,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
                   className="hover:bg-gray-700/80 focus:bg-gray-700/80 cursor-pointer px-4 py-3 data-[state=checked]:bg-gray-700/80"
                 >
                   <div className="flex items-start gap-3 w-full">
-                    <span className="text-xl flex-shrink-0 mt-0.5">{option.icon}</span>
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-white mb-1">{option.name}</div>
                       <p className="text-xs text-gray-300 leading-relaxed line-clamp-2">
@@ -773,7 +721,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-lg">{specialist.icon}</span>
                           <span className="font-medium text-sm text-white">{specialist.name}</span>
                         </div>
                         <p className="text-xs text-gray-300 leading-relaxed">
@@ -829,8 +776,7 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
 
           {/* Predefined Strategies */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-200">
-              <Target className="w-4 h-4" />
+            <label className="text-sm font-medium text-gray-200">
               Team Strategy
             </label>
             <Select value="" onValueChange={handlePredefinedStrategy}>
@@ -864,7 +810,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
             value={config.style}
             options={playStyles}
             onChange={(value) => handleConfigChange('style', value)}
-            icon={Target}
           />
 
           <SimpleDropdown
@@ -872,7 +817,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
             value={config.pressing_intensity}
             options={intensityLevels}
             onChange={(value) => handleConfigChange('pressing_intensity', value)}
-            icon={Zap}
           />
 
           <SimpleDropdown
@@ -880,7 +824,6 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
             value={config.mentality}
             options={teamMentalities}
             onChange={(value) => handleConfigChange('mentality', value)}
-            icon={Lightbulb}
           />
         </div>
       )}
@@ -973,52 +916,58 @@ const SoccerConfiguration: React.FC<SoccerConfigurationProps> = ({ config, onCon
         </h4>
         
         <div className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs text-gray-400">Attack</label>
               <span className="text-sm font-medium text-red-400">{config.resources.attack}</span>
             </div>
-            <Slider
-              value={[config.resources.attack]}
-              onValueChange={(value) => handleResourceChange('attack', value)}
-              min={60}
-              max={120}
-              step={5}
-              className="w-full"
-              disabled={!isProMode}
-            />
+            <div className="px-2">
+              <Slider
+                value={[config.resources.attack]}
+                onValueChange={(value) => handleResourceChange('attack', value)}
+                min={60}
+                max={120}
+                step={5}
+                className="w-full"
+                disabled={!isProMode}
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs text-gray-400">Midfield</label>
               <span className="text-sm font-medium text-yellow-400">{config.resources.midfield}</span>
             </div>
-            <Slider
-              value={[config.resources.midfield]}
-              onValueChange={(value) => handleResourceChange('midfield', value)}
-              min={60}
-              max={120}
-              step={5}
-              className="w-full"
-              disabled={!isProMode}
-            />
+            <div className="px-2">
+              <Slider
+                value={[config.resources.midfield]}
+                onValueChange={(value) => handleResourceChange('midfield', value)}
+                min={60}
+                max={120}
+                step={5}
+                className="w-full"
+                disabled={!isProMode}
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs text-gray-400">Defense</label>
               <span className="text-sm font-medium text-blue-400">{config.resources.defense}</span>
             </div>
-            <Slider
-              value={[config.resources.defense]}
-              onValueChange={(value) => handleResourceChange('defense', value)}
-              min={60}
-              max={120}
-              step={5}
-              className="w-full"
-              disabled={!isProMode}
-            />
+            <div className="px-2">
+              <Slider
+                value={[config.resources.defense]}
+                onValueChange={(value) => handleResourceChange('defense', value)}
+                min={60}
+                max={120}
+                step={5}
+                className="w-full"
+                disabled={!isProMode}
+              />
+            </div>
           </div>
         </div>
 
